@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Nutritionist Meal Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f3f3f3;
+            color: #000;
+        }
+
+        /* Header */
+        header {
+            background-color: #2b3f1d;
+            color: white;
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+        
+        /* hero */
+        .hero {
+            background: url('https://images.pexels.com/photos/14691481/pexels-photo-14691481.png?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center/cover;
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            padding-left: 220px;
+            color: #fff;
+            image-rendering: auto;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 600px;
+            z-index: 1;
+        }
+
+        .hero-content h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-content h3 {
+            font-style: italic;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #8bc34a;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #689f38;
+        }
+        .info-section {
+            background-color: #f0ffbd;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 10%;
+            min-height: 100vh;
+            flex-wrap: wrap;
+        }
+
+        .info-text {
+            flex: 1;
+            padding-right: 20px;
+            max-width: 50%;
+        }
+
+        .info-text h2 {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .info-text p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #000;
+            border-radius: 30px;
+            position: relative;
+        }
+
+        .read-more-btn:hover {
+            background-color: #e0f0a1;
+        }
+
+        .read-more-btn::after {
+            content: "→";
+            position: absolute;
+            right: 15px;
+        }
+
+        .info-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .info-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+         /* Meet Our Team Section */
+        .social-icons{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        .social-icons svg{
+            height: 20px;
+            width: 20px;
+        }
+        .team-section {
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .team-section h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: center;
+            gap: 150px;
+            flex-wrap: wrap;
+        }
+
+        .team-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            max-width: 250px;
+            transition: transform 0.3s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-card img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+        object-fit: cover;
+        display: block; 
+        margin-left: auto; 
+        margin-right: auto; 
+}
+
+
+        .team-card h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .team-card p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .team-card .role {
+            font-weight: bold;
+            color: #8bc34a;
+            margin-bottom: 10px;
+        }
+
+        .team-card .social-icons a {
+            text-decoration: none;
+            color: #666;
+            font-size: 1.2rem;
+            margin: 0 5px;
+        }
+
+        .team-card .social-icons a:hover {
+            color: #8bc34a;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <header>
+        <h1>FiTFEAST</h1>
+        <nav>
+            
+            <a href="#hero">Home</a>
+            <a href="#info">About</a>
+            <a href="#meal-plan-form">Meal Plan</a>
+            <a href="#team">Team Members</a>
+        </nav>
+    </header>
+
+    <section id="hero" class="hero">
+        <div class="hero-content">
+            <h2>FiTFEAST</h2>
+            <h3>Discover your Pathway</h3>
+            <h3>to a Healthy Life.</h3>
+            
+        </div>
+    </section>
+
+    <section id="info" class="info-section">
+        <div class="info-text">
+            <h2>At <strong>FiTFEAST</strong>, we believe that healthy eating should be easy, enjoyable, and tailored to your unique lifestyle.</h2>
+            <p>Our innovative meal recommendation system takes into account your dietary preferences, nutritional needs, and goals, helping you make smarter food choices every day. Whether you're looking to fuel your workouts, maintain a balanced diet, or discover new recipes, FitFeast has got you covered.</p>
+             
+        </div>
+        <div class="info-text">
+            <h2> <strong>PROBLEM STATEMENT</strong></h2>
+            <p>Users face challenges finding suitable recipes due to dietary restrictions, health concerns (e.g., allergies), and diverse ingredient preparation methods. Recommender systems address this by filtering options based on preferences, nutritional needs, and constraints, making healthy, personalized eating simpler and more convenient.</p>   
+            <h2> <strong>SOLUTION STATEMENT</strong></h2>
+            <p>FitFeast uses a smart recommender system to provide personalized meal recommendations based on dietary restrictions, health concerns, and lifestyle goals. It simplifies healthy eating by offering recipes that align with individual needs while highlighting the richness of Indian and global cuisines.</p>
+        </div>
+        <div class="info-image">
+            <img src="https://images.pexels.com/photos/7234281/pexels-photo-7234281.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Healthy Salad Bowl">
+        </div>
+    </section>
+
+    <section>
+        <div class="container mx-auto px-4 py-8 max-w-4xl">
+            <div class="bg-white shadow-md rounded-lg p-8">
+                <h1 class="text-3xl font-bold mb-6 text-center text-blue-600">AI Nutritionist Meal Planner</h1>
+                
+                <form id="meal-plan-form" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Age</label>
+                            <input 
+                                type="number" 
+                                name="age" 
+                                required 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter your age"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Gender</label>
+                            <select 
+                                name="gender" 
+                                required 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Weight (kg)</label>
+                            <input 
+                                type="number" 
+                                name="weight" 
+                                required 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter your weight"
+                            >
+                        </div>
+                        
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-2">Height (cm)</label>
+                            <input 
+                                type="number" 
+                                name="height" 
+                                required 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter your height"
+                            >
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2">Health Condition</label>
+                        <select 
+                            name="health_condition" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="">Select Health Condition</option>
+                            <option value="none">None</option>
+                            <option value="Heart Disease">Heart Disease</option>
+                            <option value="Liver Disease">Liver Disease</option>
+                            <option value="Arthritis">Arthritis</option>
+                            <option value="Kidney Disease">Kidney Disease</option>
+                            <option value="Diabetes">Diabetes</option>
+                            <option value="Asthma">Asthma</option>
+                            <option value="Hypertension">Hypertension</option>
+                            <option value="Obesity">Obesity</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2">Allergies</label>
+                        <select
+                            name="allergies" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="">Select Allergies</option>
+                            <option value="none">None</option>
+                            <option value="Dairy">Dairy</option>
+                            <option value="Sea Food">Sea Food</option>
+                            <option value="Gluten">Gluten</option>
+                            <option value="Eggs">Eggs</option>
+                            <option value="Peanut">Peanut</option>
+                            <option value="Soy">Soy</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2">Food Preference</label>
+                        <select 
+                            name="food_preference" 
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            <option value="">Select Food Preference</option>
+                            <option value="vegetarian">Vegetarian</option>
+                            <option value="vegan">Vegan</option>
+                            <option value="Non-Vegetarian">Non-Vegetarian</option>
+                        </select>
+                    </div>
+
+                    <button 
+                        type="submit" 
+                        id="generate-btn"
+                        class="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+                    >
+                        <svg id="loading-spinner" class="hidden animate-spin h-5 w-5 mr-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Generate Meal Plan
+                    </button>
+                </form>
+
+                <div id="meal-plan-result" class="mt-8 p-6 bg-gray-50 rounded-md">
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-800">Your Personalized Meal Plan</h2>
+                    <div 
+                        id="meal-plan-content" 
+                        class="whitespace-pre-wrap text-gray-700"
+                    >
+                        Your meal plan will appear here...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="team-section">
+        <h2>Meet Our Team</h2>
+        <div class="team-container">
+            <!-- Team Member 1 -->
+            <div class="team-card">
+                <img src="https://i.pinimg.com/736x/25/4d/c0/254dc0d4a735cad6809d19f14f895634.jpg" alt="Team Member 1">
+                <h3>KOMAL SINGH</h3>
+                <p class="role">23BAI10561</p>
+                <p>"I trained a model to predict my mood. It said I’m always 'confused'."</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/komal-singh-6532042a6/"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://github.com/dashboard"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </div>
+            </div>
+
+            <!-- Team Member 2 -->
+            <div class="team-card">
+                <img src="https://i.pinimg.com/736x/f3/3d/e5/f33de5f6d8580f06f5c4a36126c0c56a.jpg" alt="Team Member 2">
+                <h3>AKSHARA SRIVASTAVA</h3>
+                <p class="role">23BAI10585</p>
+                <p>"Ab mai itna bhi kuch khaas nahi."</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/akshara-srivastava-3572052a6?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://github.com/akshara12code"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </div>
+            </div>
+
+            <!-- Team Member 3 -->
+            <div class="team-card">
+                <img src="https://i.pinimg.com/736x/d1/85/b7/d185b7cea2b0e0eccdbf8f4ff535ac2a.jpg" alt="Team Member 3">
+                <h3>AKSHARA SINGH</h3>
+                <p class="role">23BAI10392</p>
+                <p>"I’m on a 30-day diet. So far, I’ve lost 15 days."</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/akshara-singh-947b612b7/"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://github.com/aksharasingh08"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="https://i.pinimg.com/736x/bf/95/34/bf953419d76bf747cba69b55e6e03957.jpg" alt="Team Member 3">
+                <h3>ANANYA CHAURASIA</h3>
+                <p class="role">23BAI11178</p>
+                <p>"I'm on a seafood diet. I see food and I eat it."</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/ananya-chaurasia-254455282/"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://github.com/Ananyachaurasia"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="https://i.pinimg.com/736x/b5/ab/1a/b5ab1adfabdf9cefb27f4f5deec4bc73.jpg" alt="Team Member 3">
+                <h3>AIMAN ANSARI</h3>
+                <p class="role">23BAI10986</p>
+                <p>"fuel your brain feed your code."</p>
+                <div class="social-icons">
+                    <a href="https://www.linkedin.com/in/aiman-ansari-2b0a7325b/"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>LinkedIn</title><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://github.com/aimmannn02"><svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>GitHub</title><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </div>
+            </div>
+
+           
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mealPlanForm = document.getElementById('meal-plan-form');
+            const mealPlanContent = document.getElementById('meal-plan-content');
+            const generateBtn = document.getElementById('generate-btn');
+            const loadingSpinner = document.getElementById('loading-spinner');
+        
+            // Enhanced Markdown rendering function
+            function renderMarkdown(markdown) {
+                // Improved markdown conversion with more robust parsing
+                let html = markdown
+                    // Bold text
+                    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-bold">$1</strong>')
+                    
+                    // Headers with improved styling
+                    .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold text-blue-600 mt-6 mb-4">$1</h1>')
+                    .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-semibold text-blue-500 mt-4 mb-3">$1</h2>')
+                    
+                    // Bullet points with improved styling
+                    .replace(/^\* (.*$)/gim, '<li class="ml-4 list-disc list-inside text-gray-700 mb-2">$1</li>')
+                    
+                    // Paragraphs
+                    .replace(/\n\n/g, '</p><p class="mb-4">')
+                    
+                    // Line breaks
+                    .replace(/\n/g, '<br>');
+        
+                // Wrap in paragraph tags and add container styling
+                html = `<div class="bg-white p-6 rounded-lg shadow-md">${html}</div>`;
+        
+                return html;
+            }
+        
+            mealPlanForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                // Form validation (previous validation code remains the same)
+                const requiredFields = mealPlanForm.querySelectorAll('[required]');
+                let isValid = true;
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        field.classList.add('border-red-500');
+                        isValid = false;
+                    } else {
+                        field.classList.remove('border-red-500');
+                    }
+                });
+        
+                if (!isValid) {
+                    alert('Please fill in all required fields');
+                    return;
+                }
+        
+                // Prepare form data
+                const formData = new FormData(mealPlanForm);
+                const data = Object.fromEntries(formData.entries());
+        
+                try {
+                    // Show loading state
+                    generateBtn.disabled = true;
+                    loadingSpinner.classList.remove('hidden');
+                    mealPlanContent.innerHTML = '<p class="text-gray-600 italic">Generating your personalized meal plan...</p>';
+        
+                    // Fetch and stream response
+                    const response = await fetch('/generate-meal-plan', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(data)
+                    });
+        
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let fullMealPlan = '';
+                    mealPlanContent.innerHTML = ''; // Clear previous content
+        
+                    while (true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+        
+                        const chunk = decoder.decode(value);
+                        const lines = chunk.split('\n\n');
+                        
+                        lines.forEach(line => {
+                            if (line.startsWith('data: ')) {
+                                try {
+                                    const data = JSON.parse(line.slice(6));
+                                    if (data.token) {
+                                        fullMealPlan += data.token;
+                                        mealPlanContent.innerHTML = renderMarkdown(fullMealPlan);
+                                    }
+                                } catch (e) {
+                                    console.error('Error parsing token:', e);
+                                }
+                            }
+                        });
+                    }
+        
+                    // Final render to ensure complete content
+                    mealPlanContent.innerHTML = renderMarkdown(fullMealPlan);
+                } catch (error) {
+                    console.error('Error generating meal plan:', error);
+                    mealPlanContent.innerHTML = `
+                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                            <strong class="font-bold">Error!</strong>
+                            <span class="block sm:inline">Failed to generate meal plan. Please try again.</span>
+                        </div>
+                    `;
+                } finally {
+                    // Reset loading state
+                    generateBtn.disabled = false;
+                    loadingSpinner.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
