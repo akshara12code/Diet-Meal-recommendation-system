@@ -2,7 +2,14 @@ Diet-Meal Recommendation System
 
 Project Overview
 
+
 The Diet-Meal Recommendation System is designed to recommend personalized meal plans based on user preferences, health conditions, fitness goals, and dietary restrictions. This system utilizes a Large Language Model (LLM) to process user inputs and suggest optimized meal plans.
+
+<img width="1912" height="965" alt="Screenshot 2025-08-01 022822" src="https://github.com/user-attachments/assets/a1bc1a55-3030-4416-9e99-f8628afc49e6" />
+<img width="1919" height="978" alt="Screenshot 2025-08-01 022844" src="https://github.com/user-attachments/assets/f3cc7a94-4767-4fe8-b840-9b7f33790616" />
+<img width="1919" height="811" alt="Screenshot 2025-08-01 022906" src="https://github.com/user-attachments/assets/1e48fbbc-b518-4d24-847f-d9330acbda11" />
+
+
 Features
 
     Personalized Recommendations: Suggest meals based on user preferences, such as vegetarian, vegan, gluten-free, etc.
@@ -38,20 +45,3 @@ System Architecture
     Recommendation Engine:
         Based on user data, a recommendation engine powered by the LLM generates personalized meal plans.
         LLM-based NLP models like GPT-3 or GPT-4 are used to understand complex user inputs and suggest optimized meal plans.
-
-How the System Works
-
-    User Data Collection:
-        The user provides input regarding their age, gender, fitness goals (e.g., weight loss, muscle gain), allergies, and dietary preferences (e.g., vegetarian, vegan, etc.).
-
-    NLP Processing:
-        The user inputs are processed by a Large Language Model (LLM) (e.g., GPT) to extract relevant dietary information, preferences, and goals.
-        The model generates meal recommendations based on this input.
-
-    Meal Plan Generation:
-        Based on the processed data, the system pulls relevant meal information from the database.
-        The meal plan is then optimized based on nutritional value, calorie requirements, and food preferences.
-
-    Meal Plan Delivery:
-        The user receives a daily, weekly, or monthly meal plan.
-        Each meal plan includes recipes, ingredients, nutritional breakdown, and preparation instructions.
